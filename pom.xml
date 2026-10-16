@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+        pupr-be — PUPR SIM backend (target architecture).
+
+        Reactor layout and module responsibilities: see ../01-SKELETON.md section 2.
+        Runtime stack: see ../03-System_Technical_Architecture.txt section 1.
+        Migration phases: see ../04-Migration_Runbook.txt.
+
+        Dependencies point inward:
+            sim-app -> { sim-web, sim-gateways, sim-persistence } -> sim-application -> sim-domain
+    -->
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.5</version>
+        <relativePath/> <!-- resolve from the repository -->
+    </parent>
+
+    <groupId>com.pupr</groupId>
+    <artifactId>pupr-be</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>pupr-be</name>
+    <description>PUPR SIM backend - modular monolith (Java 25, Spring Boot 4, ports and adapters)</description>
+
+    <modules>
+        <module>sim-domain</module>
+        <module>sim-application</module>
+        <module>sim-persistence</module>
+        <module>sim-gateways</module>
+        <module>sim-web</module>
+        <module>sim-app</module>
+    </modules>
+
+    <properties>
+        <!-- Target language level (decision D1). Override for local verification on older JDKs:
+             mvn -Djava.version=21 clean verify -->
+        <java.version>25</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+
+        <!-- Spring Modulith (decision D4) -->
+        <spring-modulith.version>2.0.6</spring-modulith.version>
+
+        <!-- Compile-time mapping, replaces ModelMapper 2.3.5 -->
+        <mapstruct.version>1.6.3</mapstruct.version>
+
+        <!-- Reports (legacy Jasper slice: /Kwitansi/item-report, /Ringkasan/*) -->
+        <jasperreports.version>7.0.0</jasperreports.version>
+
+        <!-- Architecture tests (not managed by the Spring Boot BOM) -->
+        <archunit.version>1.5.1</archunit.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Modulith BOM -->
+            <dependency>
+                <groupId>org.springframework.modulith</groupId>
+                <artifactId>spring-modulith-bom</artifactId>
+                <version>${spring-modulith.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Internal reactor modules -->
+            <dependency>
+                <groupId>com.pupr</groupId>
+                <artifactId>sim-domain</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pupr</groupId>
+                <artifactId>sim-application</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pupr</groupId>
+                <artifactId>sim-persistence</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pupr</groupId>
+                <artifactId>sim-gateways</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.pupr</groupId>
+                <artifactId>sim-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Mapping: compile-time, annotation-processor based -->
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <!-- Reports: JasperReports 7.x -->
+            <dependency>
+                <groupId>net.sf.jasperreports</groupId>
+                <artifactId>jasperreports</artifactId>
+                <version>${jasperreports.version}</version>
+            </dependency>
+
+            <!-- Architecture tests (plain ArchUnit, no Spring Boot management) -->
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5</artifactId>
+                <version>${archunit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

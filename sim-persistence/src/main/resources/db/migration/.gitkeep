@@ -1,0 +1,3 @@
+# Flyway owns the schema. Migrations are reviewed like code:
+#   V<version>__<description>.sql   e.g. V1__baseline.sql
+# Command-line / CI: mvn -pl sim-app spring-boot:run  (or flyway plugin) applies them.
