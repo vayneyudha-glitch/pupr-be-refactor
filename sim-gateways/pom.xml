@@ -20,6 +20,15 @@
             <artifactId>sim-application</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
         <!-- Report generation for the typed mappings:
              GET /Kwitansi/item-report/{id}, GET /Ringkasan/item-report/{id}, GET /Ringkasan/RekapReportV1/{id} -->
         <dependency>

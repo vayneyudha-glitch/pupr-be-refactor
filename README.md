@@ -15,8 +15,10 @@ Planning docs (in the parent folder):
 
 ## Status
 
-Phase 1 — **empty-but-green reactor**. No business behaviour, no controllers, no entities yet.
-The architecture tests below pass on the empty scaffold and will guard the first ported slice.
+The `MasterTransaction` CRUD slice is implemented with the legacy `/Master/...` routes and
+request/response fields. `getMasterTrxList` retains the legacy internal pekerjaan sync when a
+`bidang` parameter is supplied. Standalone pekerjaan sync routes are also implemented with the
+legacy GET and PATCH behavior. Reporting remains deferred because it depends on BAP.
 
 Verified 2026-10-17: `mvn -Djava.version=21 clean verify` → BUILD SUCCESS, 7/7 tests green
 (6 ArchUnit rules + Spring Modulith module verification), executable boot jar produced.
@@ -29,9 +31,15 @@ Dependencies point inward: `sim-app` → {`sim-web`, `sim-gateways`, `sim-persis
 - **sim-domain** — domain model, ports, domain rules. No Spring/JPA/Web imports (D11).
 - **sim-application** — use cases, DTOs, mapping (MapStruct, compile-time). Talks to ports only.
 - **sim-persistence** — the only module that knows SQL. Spring Data JPA + Flyway (`src/main/resources/db/migration`). JPA entities live here; the domain model stays pure (D9).
-- **sim-gateways** — outbound integrations: CRS (pending D12) and JasperReports.
+- **sim-gateways** — outbound integrations: the legacy pekerjaan lookup used by
+  `getMasterTrxList`, plus JasperReports. Other CRS integrations remain subject to D12.
 - **sim-web** — controllers, security, error mapping. Legacy route surface preserved byte-compatible.
 - **sim-app** — boot class, profiles, `application.yml`, ArchUnit + Modulith tests.
+
+The first Flyway migration creates `master_transaction`. The legacy `Master` model has no
+`@DBRef`; `mitraId` is a scalar string and is therefore not given a speculative SQL foreign key.
+The pekerjaan sync gateway defaults to the legacy service endpoint and can be overridden with
+`PUPR_MASTER_SERVICE_URL`.
 
 ## Build
 
@@ -74,6 +82,6 @@ D15 event delivery model. None block this scaffold; resolve each before porting 
 
 - springdoc-openapi — added with the first controller (verify the Boot 4-compatible line)
 - security configuration in `sim-web` (legacy semantics: stateless, CSRF off, CORS on, `permitAll`)
-- first Flyway migration + Testcontainers-backed integration tests (dependencies already declared)
+- Testcontainers-backed integration tests (dependencies already declared)
 - the 83-handler route surface — ported per slice in later phases
 - Maven wrapper (`mvnw`) — using the installed Maven 3.9.1 for now
