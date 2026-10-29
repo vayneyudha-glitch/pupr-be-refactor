@@ -1,7 +1,8 @@
 package com.pupr.web.master;
 
-import com.pupr.application.master.MasterDto;
-import com.pupr.application.master.MasterUseCase;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -12,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Map;
+import com.pupr.application.master.MasterDto;
+import com.pupr.application.master.MasterUseCase;
 
 @RestController
 @RequestMapping("/Master")
 public class MasterController {
 
-    // TODO(parity): Defer getRealisationReport and getDashBoardInformation to the reporting slice.
+       // TODO(parity): getRealisationReport and getDashBoardInformation are deferred until the BAP slice is ported (both read BAP data).
 
     private final MasterUseCase masterUseCase;
 
