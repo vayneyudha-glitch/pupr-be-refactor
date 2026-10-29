@@ -20,7 +20,7 @@ import com.pupr.application.master.MasterUseCase;
 @RequestMapping("/Master")
 public class MasterController {
 
-       // TODO(parity): getRealisationReport and getDashBoardInformation are deferred until the BAP slice is ported (both read BAP data).
+    // TODO(parity): getRealisationReport and getDashBoardInformation are deferred until the BAP slice is ported (both read BAP data).
 
     private final MasterUseCase masterUseCase;
 
