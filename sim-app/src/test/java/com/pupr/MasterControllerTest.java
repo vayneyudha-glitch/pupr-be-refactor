@@ -1,7 +1,7 @@
 package com.pupr;
 
-import com.pupr.application.MasterUseCase;
-import com.pupr.web.MasterController;
+import com.pupr.application.master.MasterUseCase;
+import com.pupr.web.master.MasterController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;

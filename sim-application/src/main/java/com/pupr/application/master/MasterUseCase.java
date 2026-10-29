@@ -1,10 +1,10 @@
-package com.pupr.application;
+package com.pupr.application.master;
 
-import com.pupr.domain.Master;
-import com.pupr.domain.MasterNotFoundException;
-import com.pupr.domain.MasterRepository;
-import com.pupr.domain.Pekerjaan;
-import com.pupr.domain.PekerjaanSource;
+import com.pupr.domain.master.Master;
+import com.pupr.domain.master.MasterNotFoundException;
+import com.pupr.domain.master.MasterRepository;
+import com.pupr.domain.pekerjaan.Pekerjaan;
+import com.pupr.domain.pekerjaan.PekerjaanSource;
 
 import java.util.ArrayList;
 import java.util.List;

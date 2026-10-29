@@ -1,4 +1,4 @@
-package com.pupr.application;
+package com.pupr.application.master;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

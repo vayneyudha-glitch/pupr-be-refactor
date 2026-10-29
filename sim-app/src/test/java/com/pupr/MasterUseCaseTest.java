@@ -1,11 +1,11 @@
 package com.pupr;
 
-import com.pupr.application.MasterMapper;
-import com.pupr.application.MasterUseCase;
-import com.pupr.domain.Master;
-import com.pupr.domain.MasterRepository;
-import com.pupr.domain.Pekerjaan;
-import com.pupr.domain.PekerjaanSource;
+import com.pupr.application.master.MasterMapper;
+import com.pupr.application.master.MasterUseCase;
+import com.pupr.domain.master.Master;
+import com.pupr.domain.master.MasterRepository;
+import com.pupr.domain.pekerjaan.Pekerjaan;
+import com.pupr.domain.pekerjaan.PekerjaanSource;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package com.pupr.domain;
+package com.pupr.domain.master;
 
 public class MasterNotFoundException extends RuntimeException {
 

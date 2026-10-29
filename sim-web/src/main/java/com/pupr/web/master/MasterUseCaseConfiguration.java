@@ -1,9 +1,9 @@
-package com.pupr.web;
+package com.pupr.web.master;
 
-import com.pupr.application.MasterMapper;
-import com.pupr.application.MasterUseCase;
-import com.pupr.domain.MasterRepository;
-import com.pupr.domain.PekerjaanSource;
+import com.pupr.application.master.MasterMapper;
+import com.pupr.application.master.MasterUseCase;
+import com.pupr.domain.master.MasterRepository;
+import com.pupr.domain.pekerjaan.PekerjaanSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

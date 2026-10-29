@@ -1,4 +1,4 @@
-package com.pupr.web;
+package com.pupr.web.master;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;

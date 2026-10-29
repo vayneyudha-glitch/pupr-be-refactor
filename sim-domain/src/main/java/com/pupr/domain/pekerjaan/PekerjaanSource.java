@@ -1,4 +1,4 @@
-package com.pupr.domain;
+package com.pupr.domain.pekerjaan;
 
 import java.util.List;
 

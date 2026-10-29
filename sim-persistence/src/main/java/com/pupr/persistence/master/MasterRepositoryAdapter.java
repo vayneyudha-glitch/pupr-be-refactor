@@ -1,7 +1,7 @@
-package com.pupr.persistence;
+package com.pupr.persistence.master;
 
-import com.pupr.domain.Master;
-import com.pupr.domain.MasterRepository;
+import com.pupr.domain.master.Master;
+import com.pupr.domain.master.MasterRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
-package com.pupr.gateways;
+package com.pupr.gateways.pekerjaan;
 
-import com.pupr.domain.Pekerjaan;
-import com.pupr.domain.PekerjaanSource;
+import com.pupr.domain.pekerjaan.Pekerjaan;
+import com.pupr.domain.pekerjaan.PekerjaanSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;

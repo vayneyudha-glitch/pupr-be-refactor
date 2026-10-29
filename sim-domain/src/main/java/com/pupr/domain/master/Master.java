@@ -1,4 +1,4 @@
-package com.pupr.domain;
+package com.pupr.domain.master;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

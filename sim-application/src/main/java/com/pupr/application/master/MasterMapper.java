@@ -1,7 +1,7 @@
-package com.pupr.application;
+package com.pupr.application.master;
 
-import com.pupr.domain.Master;
-import com.pupr.domain.Pekerjaan;
+import com.pupr.domain.master.Master;
+import com.pupr.domain.pekerjaan.Pekerjaan;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

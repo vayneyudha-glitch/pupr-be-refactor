@@ -1,4 +1,4 @@
-package com.pupr.web;
+package com.pupr.web.master;
 
 public record SyncBidangRequest(String bidangCode) {
 }

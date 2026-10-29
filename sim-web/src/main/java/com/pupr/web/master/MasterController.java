@@ -1,7 +1,7 @@
-package com.pupr.web;
+package com.pupr.web.master;
 
-import com.pupr.application.MasterDto;
-import com.pupr.application.MasterUseCase;
+import com.pupr.application.master.MasterDto;
+import com.pupr.application.master.MasterUseCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

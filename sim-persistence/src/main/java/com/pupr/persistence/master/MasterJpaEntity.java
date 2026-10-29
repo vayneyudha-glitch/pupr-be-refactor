@@ -1,6 +1,6 @@
-package com.pupr.persistence;
+package com.pupr.persistence.master;
 
-import com.pupr.domain.Master;
+import com.pupr.domain.master.Master;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

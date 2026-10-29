@@ -15,6 +15,11 @@
     <description>Domain model, ports and domain rules. Framework-free (decision D11).</description>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.modulith</groupId>
+            <artifactId>spring-modulith-api</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- Lombok is allowed here (and only here); records replace most usages. -->
         <dependency>
             <groupId>org.projectlombok</groupId>

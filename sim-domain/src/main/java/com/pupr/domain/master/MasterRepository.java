@@ -1,4 +1,4 @@
-package com.pupr.domain;
+package com.pupr.domain.master;
 
 import java.util.List;
 import java.util.Optional;

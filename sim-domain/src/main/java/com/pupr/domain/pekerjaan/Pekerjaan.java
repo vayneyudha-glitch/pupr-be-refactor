@@ -1,4 +1,4 @@
-package com.pupr.domain;
+package com.pupr.domain.pekerjaan;
 
 import java.math.BigDecimal;
 import java.util.Date;
