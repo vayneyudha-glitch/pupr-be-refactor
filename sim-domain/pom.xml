@@ -15,6 +15,11 @@
     <description>Domain model, ports and domain rules. Framework-free (decision D11).</description>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.modulith</groupId>
+            <artifactId>spring-modulith-api</artifactId>
+            <optional>true</optional>
+        </dependency>
         <!-- Lombok is allowed here (and only here); records replace most usages. -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -22,4 +27,22 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

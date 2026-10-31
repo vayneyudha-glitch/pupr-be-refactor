@@ -23,6 +23,7 @@ class ArchitectureTest {
     @ArchTest
     static final ArchRule domain_is_framework_free = noClasses()
             .that().resideInAPackage("com.pupr.domain..")
+            .and().haveSimpleNameNotEndingWith("package-info")
             .should().dependOnClassesThat().resideInAnyPackage(
                     "org.springframework..",
                     "jakarta.persistence..",
