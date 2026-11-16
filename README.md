@@ -18,8 +18,8 @@ Planning docs (in the parent folder):
 The `MasterTransaction` CRUD slice is implemented with the legacy `/Master/...` routes and
 request/response fields. `getMasterTrxList` retains the legacy internal pekerjaan sync when a
 `bidang` parameter is supplied. Standalone pekerjaan sync routes are also implemented with the
-legacy GET and PATCH behavior. The independent BAP routes are ported; BAP detail aggregation and
-downstream-validation routes remain deferred until their transaction modules are migrated.
+legacy GET and PATCH behavior. The independent BAP and Kwitansi routes are ported; detail and
+report routes remain deferred where their related module or Jasper integration is unavailable.
 
 Verified 2026-10-17: `mvn -Djava.version=21 clean verify` → BUILD SUCCESS, 7/7 tests green
 (6 ArchUnit rules + Spring Modulith module verification), executable boot jar produced.
@@ -66,6 +66,27 @@ Deferred until related modules are migrated: `GET /Bap/findByNo` (Ringkasan, Kwi
 SP2D, and MasterMitra), `GET /Bap/getValidateRemove` (Ringkasan, Kwitansi, SPP, SPM, SP2D),
 and `GET /Bap/findByBastp` (Ringkasan). Ports are in the BAP domain; no adapters or routes for
 those modules are introduced here.
+
+The Kwitansi slice uses `domain/kwitansi`, `application/kwitansi`, `persistence/kwitansi`, and
+`web/kwitansi`. Its IDs are BIGINT identity values exposed as String DTO fields; `masterTransactionId`
+is a BIGINT foreign key, and legacy date-only audit strings use DATE columns. V3 creates
+`kwitansi_transaction`; V1 and V2 remain unchanged.
+
+Kwitansi route inventory from `legacy/uat`:
+
+- `POST /Kwitansi/submit` — implemented; Master and BidangTahunActive year validation, BAP child reference.
+- `PUT /Kwitansi/put` — implemented; Master and BidangTahunActive year validation.
+- `GET /Kwitansi/findById` — deferred; BAP, Master, Ringkasan by BAP ID, and MasterMitra.
+- `GET /Kwitansi/findByBapNo` — implemented; Kwitansi only.
+- `GET /Kwitansi/findDataByLimit1` — implemented; Kwitansi only.
+- `GET /Kwitansi/findDataByLimit1V2` — implemented; BAP and Master.
+- `PUT /Kwitansi/removeById` — implemented; BAP and DeletedCollection.
+- `GET /Kwitansi/item-report/{id}` — deferred; BAP, Master, Ringkasan, MasterMitra, and JasperReports.
+
+The year validation and BAP reference update use the existing Master/BAP ports; removal auditing
+uses the existing DeletedCollection port. A domain port records the deferred Ringkasan lookup;
+MasterMitra already has a port in the BAP domain. No Sp2D, Spm, Spp, Validasi, or Rekom dependency
+is used by the Kwitansi routes. JasperReports integration remains undecided in `sim-gateways`.
 
 The first Flyway migration creates `master_transaction`. The legacy `Master` model has no
 `@DBRef`; `mitraId` is a scalar string and is therefore not given a speculative SQL foreign key.
