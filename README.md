@@ -18,7 +18,8 @@ Planning docs (in the parent folder):
 The `MasterTransaction` CRUD slice is implemented with the legacy `/Master/...` routes and
 request/response fields. `getMasterTrxList` retains the legacy internal pekerjaan sync when a
 `bidang` parameter is supplied. Standalone pekerjaan sync routes are also implemented with the
-legacy GET and PATCH behavior. Reporting remains deferred because it depends on BAP.
+legacy GET and PATCH behavior. The independent BAP routes are ported; BAP detail aggregation and
+downstream-validation routes remain deferred until their transaction modules are migrated.
 
 Verified 2026-10-17: `mvn -Djava.version=21 clean verify` → BUILD SUCCESS, 7/7 tests green
 (6 ArchUnit rules + Spring Modulith module verification), executable boot jar produced.
@@ -35,6 +36,36 @@ Dependencies point inward: `sim-app` → {`sim-web`, `sim-gateways`, `sim-persis
   `getMasterTrxList`, plus JasperReports. Other CRS integrations remain subject to D12.
 - **sim-web** — controllers, security, error mapping. Legacy route surface preserved byte-compatible.
 - **sim-app** — boot class, profiles, `application.yml`, ArchUnit + Modulith tests.
+
+The BAP slice uses `domain/bap`, `domain/bidangtahunactive`, `domain/deletedcollection`,
+`application/bap`, `application/deletedcollection`, `persistence/bap`,
+`persistence/bidangtahunactive`, `persistence/deletedcollection`, and `web/bap`. Its
+`masterTransactionId` remains a String in the DTO and is parsed as a BIGINT for the
+`master_transaction.id` foreign key; non-numeric IDs are rejected rather than coerced. V2 creates
+`bap_transaction`, `bidang_tahun_active`, and `deleted_collection`. The last two are minimal
+support tables for BAP year validation and delete auditing only; the full Master Parameters module
+is still planned. No active-year rows are seeded, so `/Bap/submit` returns 403 until its matching
+`bidang_desc` and `tahun_active` row exists.
+
+Implemented BAP routes:
+
+- `POST /Bap/submit`
+- `GET /Bap/submitValidItemanis`
+- `GET /Bap/findById`
+- `GET /Bap/findByNoV2`
+- `GET /Bap/findDataByLimit1`
+- `GET /Bap/findDataByBapNoLimit`
+- `GET /Bap/findDataByMasterTrxId`
+- `GET /Bap/findDataByMasterTrxIdV2`
+- `PUT /Bap/removeById`
+- `GET /Bap/findBapNoHibah`
+- `GET /Bap/getRealisationReport`
+- `GET /Bap/getRealisationView`
+
+Deferred until related modules are migrated: `GET /Bap/findByNo` (Ringkasan, Kwitansi, SPM,
+SP2D, and MasterMitra), `GET /Bap/getValidateRemove` (Ringkasan, Kwitansi, SPP, SPM, SP2D),
+and `GET /Bap/findByBastp` (Ringkasan). Ports are in the BAP domain; no adapters or routes for
+those modules are introduced here.
 
 The first Flyway migration creates `master_transaction`. The legacy `Master` model has no
 `@DBRef`; `mitraId` is a scalar string and is therefore not given a speculative SQL foreign key.
@@ -69,9 +100,10 @@ Requires PostgreSQL 17. Configuration via environment variables (defaults in par
 - `PUPR_DB_URL` (`jdbc:postgresql://localhost:5432/pupr`)
 - `PUPR_DB_USERNAME` (`pupr`) · `PUPR_DB_PASSWORD` (`pupr`)
 - `PUPR_SERVER_PORT` (`8080`)
+- `PUPR_MASTER_SERVICE_URL` (no default; required by the pekerjaan gateway)
 
-Flyway owns the schema (`ddl-auto=validate`, never `update`). The first migration is still
-to be written — the app will not start against an empty database until it exists.
+Flyway owns the schema (`ddl-auto=validate`, never `update`). V1 creates the Master table and V2
+creates the BAP slice tables.
 
 ## Open decisions (04-Migration_Runbook.txt §1)
 
